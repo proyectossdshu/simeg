@@ -14,11 +14,7 @@ import {
   Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import * as Scroll from "react-scroll";
-import {
-  Link,
-  animateScroll as scroll,
-} from "react-scroll";
+import { Link } from "react-scroll";
 
 const drawerWidth = 240;
 const navItems = [

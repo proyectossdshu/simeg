@@ -1,5 +1,4 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 
 const Simeg = () => {
   return (
