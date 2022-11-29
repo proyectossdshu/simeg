@@ -5,12 +5,16 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "swiper/css/bundle";
 
-import SimegHome from "./pages/SimegHome";
+import Simeg from "./pages/Simeg/Simeg";
+import SimegLanding from "./pages/Simeg/SimegLanding";
+import WithLayout from "./WithLayout";
+import Main from "./components/Main/Main";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <SimegHome />
+    <WithLayout component={SimegLanding} layout={Main}/>
+    {/* <Simeg/> */}
   </React.StrictMode>
 );
 

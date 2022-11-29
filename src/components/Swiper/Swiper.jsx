@@ -42,9 +42,9 @@ const Swipper = ({ children }) => {
         modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
         className="mySwiper"
       >
-        {banners.map((banner, idx) => (
+        {banners.map((banner, i) => (
           <>
-            <SwiperSlide key={idx}>
+            <SwiperSlide key={i}>
               <img
                 src={banner.img}
                 alt="meet"
