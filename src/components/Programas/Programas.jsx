@@ -80,23 +80,30 @@ const Programas = () => {
               pse: item.F2,
             };
           });
-          const categories = res.response.data.map((item) => item.F1);
-          const series = res.response.data.map((item, i) => {
-            return {
-              name: item.F1,
-              color: "#0082FF",
-              data: [item.F2],
-            };
-          });
 
           setProgramas(programs);
-          setCategorie(categories);
-          setSeries(series);
+
           setTotal(res.response.total);
         }
       })
       .catch((error) => console.error(error));
   };
+
+  useEffect(() => {
+    const categories = programas.map((item) => item.tematica);
+    const series = [
+      {
+        showInLegend: false,
+        data: programas.map((item, i) => {
+          return { y: item.pse };
+        }),
+        pointPadding: 0.4,
+        pointPlacement: -0.2,
+      },
+    ];
+    setCategorie(categories);
+    setSeries(series);
+  }, [programas]);
 
   useEffect(() => {
     getStatsByTopic();

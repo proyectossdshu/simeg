@@ -4,6 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 
 const Chart = (props) => {
   const { categories, series, title } = props;
+
   const [data, setData] = useState(null);
 
   useEffect(() => {
