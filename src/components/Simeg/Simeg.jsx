@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import Slider from "react-slick";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 const Simeg = () => {
   const theme = useTheme();
@@ -10,30 +19,55 @@ const Simeg = () => {
   });
 
   const GridItemHeadlineBlock = () => {
-    <Box>
-      <Box
-        component={Typography}
-        fontWeight={700}
-        variant={"h3"}
-        gutterBottom
-        data-aos={isMd ? "fade-right" : "fade-up"}
-      >
-        ¿Qué es el simeg?
+    return (
+      <Box>
+        <Box marginBottom={2}>
+          <Typography
+            variant="h2"
+            color="textPrimary"
+            sx={{
+              fontWeight: 700,
+            }}
+          >
+            ¿Qué es el
+            <br />{" "}
+            <Typography
+              color={"primary"}
+              component={"span"}
+              variant={"inherit"}
+            >
+              Simeg?
+            </Typography>
+          </Typography>
+        </Box>
+        <Typography
+          variant={"h6"}
+          component={"p"}
+          color={"textSecondary"}
+          data-aos={isMd ? "fade-right" : "fade-up"}
+        >
+          We are a small agency with a talented team of designers & developers.
+          Unlike huge agencies, we will treat your project as ours, and will
+          walk you through our process by hand.
+          <br />
+          We are a small agency with a talented team of designers & developers.
+          Unlike huge agencies, we will treat your project as ours, and will
+          walk you through our process by hand.
+        </Typography>
       </Box>
-      <Typography
-        variant={"h6"}
-        component={"p"}
-        color={"textSecondary"}
-        data-aos={isMd ? "fade-right" : "fade-up"}
-      >
-        We are a small agency with a talented team of designers & developers.
-        Unlike huge agencies, we will treat your project as ours, and will walk
-        you through our process by hand.
-      </Typography>
-    </Box>;
+    );
   };
 
   const GridItemReviewBlock = () => {
+    const [banners, setBanners] = useState([
+      {
+        img: "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+      },
+      {
+        img: "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+      },
+    ]);
+
     const sliderOpts = {
       dots: true,
       infinite: true,
@@ -41,12 +75,52 @@ const Simeg = () => {
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: false,
+      autoplay: true,
     };
 
-    
+    return (
+      <Box maxWidth={"100%"} data-aos={isMd ? "fade-left" : "fade-up"}>
+        <Slider {...sliderOpts}>
+          {banners.map((item, i) => (
+            <Box padding={{ xs: 1, sm: 2 }} key={i}>
+              <Box
+                component={Card}
+                boxShadow={{ xs: 1, sm: 3 }}
+                borderRadius={5}
+                //padding={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Box
+                  //component={CardContent}
+                  display={"flex"}
+                  flexDirection={"column"}
+                >
+                  <img src={item.img} />
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </Slider>
+      </Box>
+    );
   };
 
-  return <></>;
+  return (
+    <Box id="simeg">
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={5}>
+          <Box width={1} height="100%" display="flex" alignItems="center">
+            <GridItemHeadlineBlock />
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} md={7}>
+          <Box width={1} height="100%" display="flex" alignItems="center">
+            <GridItemReviewBlock />
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 };
 
 export default Simeg;
