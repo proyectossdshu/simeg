@@ -1,14 +1,15 @@
 import Swal from "sweetalert2";
 import { isEmptyOrNullObject } from "./validations";
-import { URL_PUBLICA, setVars, getVars, encryptVars, decryptVars, DEBUG } from "./global";
+import { URL_PUBLICA, setVars, getVars, encryptVars, decryptVars, DEBUG, TOKEN } from "./global";
 
 
 export const ApiExec = (data, api, method = "POST") => {
   let headers = new Headers();
-  if (!isEmptyOrNullObject(getVars("Token"))) {
+  headers.append("Authorization", TOKEN);
+  /* if (!isEmptyOrNullObject(getVars("Token"))) {
     const userData = getVars("Token");
-    headers.append("Authorization", `Bearer ${userData.access_token}`);
-  }
+    headers.append("Authorization", `API ${TOKEN}`);
+  } */
   
   if (DEBUG) {
     headers.append("Content-Type", "application/json");

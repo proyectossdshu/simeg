@@ -15,11 +15,14 @@ import { BarChart, TableRows } from "@mui/icons-material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import Highcharts from "highcharts";
 
 import Chart from "../Charts/Chart";
 import BasicTable from "../Table/BasicTable";
 
 import ico_chart from "../../assets/chart_programas.svg";
+import SimegService from "../../services/SimegService";
+import { lightBlue, pink } from "@mui/material/colors";
 
 const Programas = () => {
   const theme = useTheme();
@@ -43,12 +46,13 @@ const Programas = () => {
   const [data, setData] = useState({
     page: 0,
     pageSize: 10,
-    filtered: [],
   });
   const [isChart, setIsChart] = useState(true);
   const [active, setActive] = useState(false);
   const [programas, setProgramas] = useState([]);
-  const [total] = useState(0);
+  const [series, setSeries] = useState([]);
+  const [categorie, setCategorie] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const handleChangeFormat = (type) => {
     if (type === "chart") {
@@ -62,43 +66,41 @@ const Programas = () => {
     }
   };
 
-  useEffect(() => {
-    setProgramas([
-      {
-        tematica:
-          "Acceso al trabajo y proyectos productivos de personas en situación de vulnerabilidad",
-        pse: 19,
-      },
-      {
-        tematica: "Actividad física",
-        pse: 3,
-      },
-      {
-        tematica: "Alimentación y nutrición",
-        pse: 7,
-      },
-      {
-        tematica: "Caminos y transportes",
-        pse: 5,
-      },
-      {
-        tematica: "Cohesión social",
-        pse: 10,
-      },
-      {
-        tematica: "Derechos y procuración de justicia",
-        pse: 4,
-      },
-      {
-        tematica: "Educación",
-        pse: 22,
-      },
-    ]);
-  }, []);
-
   const handleChangePagination = (pagination) => {
     setData({ ...data, ...pagination });
   };
+
+  const getStatsByTopic = () => {
+    SimegService.getStatsByTopic(data)
+      .then((res) => {
+        if (res.results) {
+          const programs = res.response.data.map((item) => {
+            return {
+              tematica: item.F1,
+              pse: item.F2,
+            };
+          });
+          const categories = res.response.data.map((item) => item.F1);
+          const series = res.response.data.map((item, i) => {
+            return {
+              name: item.F1,
+              color: "#0082FF",
+              data: [item.F2],
+            };
+          });
+
+          setProgramas(programs);
+          setCategorie(categories);
+          setSeries(series);
+          setTotal(res.response.total);
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    getStatsByTopic();
+  }, [data]);
 
   return (
     <Grid
@@ -151,7 +153,11 @@ const Programas = () => {
 
             <Box marginBottom={4}>
               {isChart ? (
-                <Chart />
+                <Chart
+                  title={"Programas Evaluados"}
+                  categories={categorie}
+                  series={series}
+                />
               ) : (
                 <BasicTable
                   hcolumns={colums}
@@ -176,10 +182,9 @@ const Programas = () => {
             variant={"h4"}
             gutterBottom
           >
-            Programas{" "}
-            <Typography color="primary" variant="inherit" component="span">
-              Evaluados
-            </Typography>
+            Programas Evaluados
+            <br />
+            Por Ejercicio Fiscal
           </Box>
           <Typography variant={"h6"} component={"p"} color={"textSecondary"}>
             Lorem ipsum dolor sit amet,

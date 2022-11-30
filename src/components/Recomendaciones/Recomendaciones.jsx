@@ -37,10 +37,7 @@ const Recomendaciones = () => {
               variant={"h4"}
               gutterBottom
             >
-              Recomendaciones{" "}
-              <Typography color="primary" variant="inherit" component="span">
-                Atendidas
-              </Typography>
+              Recomendaciones Atendidas
             </Box>
             <Typography variant={"h6"} component={"p"} color={"textSecondary"}>
               Lorem ipsum dolor sit amet,
@@ -80,30 +77,33 @@ const Recomendaciones = () => {
                     <InputSelect
                       label="Año"
                       size="small"
-                      sx={{ width: "100%" }}
+                      name="año"
                       options={option}
+                      sx={{ width: "100%" }}
                     />
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <InputSelect
                       label="Proyecto"
                       size="small"
-                      sx={{ width: "100%" }}
+                      name="proyecto"
                       options={option}
+                      sx={{ width: "100%" }}
                     />
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <InputSelect
                       label="Tipo de recomendación"
                       size="small"
-                      sx={{ width: "100%" }}
+                      name="tipoRecomendación"
                       options={option}
+                      sx={{ width: "100%" }}
                     />
                   </Grid>
                 </Grid>
               </Box>
               <Box marginBottom={4}>
-                <Chart />
+                <Chart title={"Recomendaciones"} series={[]} categories={[]} />
               </Box>
             </Box>
           </Box>

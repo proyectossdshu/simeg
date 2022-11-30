@@ -4,7 +4,8 @@ const {
   REACT_APP_BASE_VERSION,
   REACT_APP_C27_KEY,
   REACT_APP_DEBUG,
-  REACT_APP_RECAPTCHA_SITE_KEY
+  REACT_APP_RECAPTCHA_SITE_KEY,
+  REACT_APP_API_KEY
 } = process.env;
 
 export const Version = `Ver ${REACT_APP_BASE_VERSION}`;
@@ -17,6 +18,8 @@ export const BASE_GEOCODE_URL =
 export const GOOGLE_MAPS_KEY = "Llave de maps";
 
 export const URL_PUBLICA = `${REACT_APP_BASE_URL}/`;
+
+export const TOKEN = REACT_APP_API_KEY;
 
 export const DEBUG = (REACT_APP_DEBUG.toLowerCase() === "true");
 

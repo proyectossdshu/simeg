@@ -60,7 +60,7 @@ const TipoEvaluacion = () => {
     slidesToShow,
     slidesToScroll: 1,
     arrows: false,
-    autoplay: true,
+    //autoplay: true,
   };
 
   return (
