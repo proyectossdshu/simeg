@@ -43,16 +43,15 @@ const Programas = () => {
     },
   ];
 
-  const [data, setData] = useState({
-    page: 0,
-    pageSize: 10,
-  });
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [total, setTotal] = useState(0);
   const [isChart, setIsChart] = useState(true);
   const [active, setActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [programas, setProgramas] = useState([]);
   const [series, setSeries] = useState([]);
   const [categorie, setCategorie] = useState([]);
-  const [total, setTotal] = useState(0);
 
   const handleChangeFormat = (type) => {
     if (type === "chart") {
@@ -66,12 +65,9 @@ const Programas = () => {
     }
   };
 
-  const handleChangePagination = (pagination) => {
-    setData({ ...data, ...pagination });
-  };
-
   const getStatsByTopic = () => {
-    SimegService.getStatsByTopic(data)
+    setIsLoading(true);
+    SimegService.getStatsByTopic({})
       .then((res) => {
         if (res.results) {
           const programs = res.response.data.map((item) => {
@@ -82,17 +78,18 @@ const Programas = () => {
           });
 
           setProgramas(programs);
-
           setTotal(res.response.total);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
     const categories = programas.map((item) => item.tematica);
     const series = [
       {
+        name: "Programas Evaluados",
         showInLegend: false,
         data: programas.map((item, i) => {
           return { y: item.pse };
@@ -107,7 +104,7 @@ const Programas = () => {
 
   useEffect(() => {
     getStatsByTopic();
-  }, [data]);
+  }, []);
 
   return (
     <Grid
@@ -169,11 +166,10 @@ const Programas = () => {
                 <BasicTable
                   hcolumns={colums}
                   rows={programas}
-                  handleChangePagination={handleChangePagination}
-                  //isLoading={isLoadingAccessList}
+                  isLoading={isLoading}
                   total={total}
-                  pageProp={data.page}
-                  pageSize={data.pageSize}
+                  pageProp={page}
+                  pageSize={rowsPerPage}
                 />
               )}
             </Box>

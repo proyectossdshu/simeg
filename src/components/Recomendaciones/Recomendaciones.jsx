@@ -71,9 +71,9 @@ const Recomendaciones = () => {
             borderRadius={4}
           >
             <Box component={CardContent}>
-              <Box marginBottom={4}>
+              <Box marginBottom={2}>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={6}>
                     <InputSelect
                       label="Año"
                       size="small"
@@ -82,7 +82,21 @@ const Recomendaciones = () => {
                       sx={{ width: "100%" }}
                     />
                   </Grid>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={6}>
+                    <InputSelect
+                      label="Dependencia"
+                      size="small"
+                      name="dependencia"
+                      options={option}
+                      sx={{ width: "100%" }}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Box marginBottom={3}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
                     <InputSelect
                       label="Proyecto"
                       size="small"
@@ -91,11 +105,11 @@ const Recomendaciones = () => {
                       sx={{ width: "100%" }}
                     />
                   </Grid>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={6}>
                     <InputSelect
-                      label="Tipo de recomendación"
+                      label="Recomendación"
                       size="small"
-                      name="tipoRecomendación"
+                      name="recomendacion"
                       options={option}
                       sx={{ width: "100%" }}
                     />

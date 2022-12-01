@@ -12,6 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import BanHome from "../../assets/img/BanHome.png";
+
 const Simeg = () => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"), {
@@ -61,10 +63,10 @@ const Simeg = () => {
   const GridItemReviewBlock = () => {
     const [banners, setBanners] = useState([
       {
-        img: "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+        img: BanHome,
       },
       {
-        img: "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+        img: BanHome,
       },
     ]);
 

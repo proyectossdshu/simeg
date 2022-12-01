@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import "swiper/css/bundle";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-//import 'aos/dist/aos.css';
+import 'aos/dist/aos.css';
 
 import Simeg from "./pages/Simeg/Simeg";
 import SimegLanding from "./pages/Simeg/SimegLanding";
