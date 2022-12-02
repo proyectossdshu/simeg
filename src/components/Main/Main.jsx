@@ -7,6 +7,7 @@ import Container from "../../common/Container";
 import Topbar from "./Topbar/Topbar";
 import Sidebar from "./Sidebar/Sidebar";
 import TopSocial from "./Topbar/TopSocial";
+import Footer from "./Footer/Footer";
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger();
@@ -66,8 +67,13 @@ const Main = ({ children }) => {
       <main>
         <Box height={{ xs: 56, sm: 64 }} />
         {children}
-        <Divider />
+        {/* <Divider /> */}
       </main>
+      <Box sx={{backgroundColor:"#E4ECFA"}}>
+        <Container paddingY={4}>
+          <Footer />
+        </Container>
+      </Box>
     </div>
   );
 };

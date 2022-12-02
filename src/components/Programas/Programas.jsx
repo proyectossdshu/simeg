@@ -43,8 +43,8 @@ const Programas = () => {
     },
   ];
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page] = useState(0);
+  const [rowsPerPage] = useState(10);
   const [total, setTotal] = useState(0);
   const [isChart, setIsChart] = useState(true);
   const [active, setActive] = useState(false);
