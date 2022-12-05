@@ -1,9 +1,9 @@
+import { useState, useEffect } from "react";
 import {
   Box,
   Card,
   Grid,
   Typography,
-  Container,
   CardContent,
 } from "@mui/material";
 import ico_chart from "../../assets/chart_recomendaciones.svg";
@@ -11,6 +11,7 @@ import Chart from "../Charts/Chart";
 import InputSelect from "../Select/BasicSelect";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import SimegService from "../../services/SimegService";
 
 const Recomendaciones = () => {
   const theme = useTheme();
@@ -21,6 +22,54 @@ const Recomendaciones = () => {
     { value: 1, label: "Opcion1" },
     { value: 2, label: "Opcion2" },
   ];
+
+  const [series, setSeries] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [recomendaciones, setRecomendaciones] = useState([]);
+
+  const getEvaluatedPrograms = () => {
+    SimegService.getEvaluatedPrograms({})
+      .then((res) => {
+        if (res.results) {
+          setRecomendaciones(res.response.data);
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    const categories = recomendaciones.map((item) => item.EvaluacionNombre);
+
+    const series = [
+      {
+        name: "Total de Recomendaciones",
+        showInLegend: false,
+        data: recomendaciones.map((item) => {
+          return { y: item.TotalRecomendaciones };
+        }),
+        pointPadding: 0.4,
+        pointPlacement: -0.2,
+        color: "#0066FF"
+      },
+      {
+        name: "Recomendaciones Atendidas",
+        showInLegend: false,
+        data: recomendaciones.map((item) => {
+          return { y: item.Atendidas };
+        }),
+        color: "#FF5AC8"
+        
+      },
+    ];
+
+    setCategories(categories);
+    setSeries(series);
+  }, [recomendaciones]);
+
+  useEffect(() => {
+    getEvaluatedPrograms();
+  }, []);
+
   return (
     <>
       <Grid
@@ -117,7 +166,11 @@ const Recomendaciones = () => {
                 </Grid>
               </Box>
               <Box marginBottom={4}>
-                <Chart title={"Recomendaciones"} series={[]} categories={[]} />
+                <Chart
+                  title={"Recomendaciones"}
+                  series={series}
+                  categories={categories}
+                />
               </Box>
             </Box>
           </Box>

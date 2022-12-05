@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Card,
-  Container,
   IconButton,
-  Stack,
   Tooltip,
   Typography,
   Grid,
@@ -15,7 +13,6 @@ import { BarChart, TableRows } from "@mui/icons-material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import Highcharts from "highcharts";
 
 import Chart from "../Charts/Chart";
 import BasicTable from "../Table/BasicTable";
@@ -102,8 +99,8 @@ const Programas = () => {
         data: programas.map((item, i) => {
           return { y: item.F2 };
         }),
-        pointPadding: 0.4,
-        pointPlacement: -0.2,
+        color: "#0066FF"
+        
       },
     ];
     setCategorie(categories);
