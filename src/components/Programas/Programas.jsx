@@ -32,24 +32,25 @@ const Programas = () => {
   const colums = [
     {
       label: "Tematica de atención",
-      id: "tematica",
+      id: "F1",
       width: 400,
       columnAction: false,
     },
     {
       label: "PSE",
-      id: "pse",
+      id: "F2",
       columnAction: false,
     },
   ];
 
-  const [page] = useState(0);
-  const [rowsPerPage] = useState(10);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   const [isChart, setIsChart] = useState(true);
   const [active, setActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [programas, setProgramas] = useState([]);
+  const [programasFiltered, setProgramasFiltered] = useState([]);
   const [series, setSeries] = useState([]);
   const [categorie, setCategorie] = useState([]);
 
@@ -70,14 +71,11 @@ const Programas = () => {
     SimegService.getStatsByTopic({})
       .then((res) => {
         if (res.results) {
-          const programs = res.response.data.map((item) => {
-            return {
-              tematica: item.F1,
-              pse: item.F2,
-            };
-          });
-
+          const programs = res.response.data;
           setProgramas(programs);
+
+          const dataFiltered = res.response.data.slice(0, pageSize);
+          setProgramasFiltered(dataFiltered);
           setTotal(res.response.total);
         }
       })
@@ -85,14 +83,24 @@ const Programas = () => {
       .finally(() => setIsLoading(false));
   };
 
+  const handleChangePage = ({page, pageSize}) => {
+    const start = page * pageSize;
+    const end = start + pageSize;
+
+    const dataFiltered = programas.slice(start, end);
+    setProgramasFiltered(dataFiltered);
+    setPage(page);
+    setPageSize(pageSize);
+  }
+
   useEffect(() => {
-    const categories = programas.map((item) => item.tematica);
+    const categories = programas.map((item) => item.F1);
     const series = [
       {
         name: "Programas Evaluados",
         showInLegend: false,
         data: programas.map((item, i) => {
-          return { y: item.pse };
+          return { y: item.F2 };
         }),
         pointPadding: 0.4,
         pointPlacement: -0.2,
@@ -165,11 +173,12 @@ const Programas = () => {
               ) : (
                 <BasicTable
                   hcolumns={colums}
-                  rows={programas}
+                  rows={programasFiltered}
                   isLoading={isLoading}
                   total={total}
                   pageProp={page}
-                  pageSize={rowsPerPage}
+                  pageSize={pageSize}
+                  handleChangePagination={handleChangePage}
                 />
               )}
             </Box>
