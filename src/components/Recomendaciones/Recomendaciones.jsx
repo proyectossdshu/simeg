@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Card,
-  Grid,
-  Typography,
-  CardContent,
-} from "@mui/material";
+import { Box, Card, Grid, Typography, CardContent } from "@mui/material";
 import ico_chart from "../../assets/chart_recomendaciones.svg";
 import Chart from "../Charts/Chart";
 import InputSelect from "../Select/BasicSelect";
@@ -26,15 +20,56 @@ const Recomendaciones = () => {
   const [series, setSeries] = useState([]);
   const [categories, setCategories] = useState([]);
   const [recomendaciones, setRecomendaciones] = useState([]);
+  const [catEjercicio, setCatEjercicio] = useState([
+    { value: 2015, label: "2015" },
+    { value: 2016, label: "2016" },
+  ]);
+  const [filter, setFilter] = useState({ filtered: [] });
+  const [values, setValues] = useState({
+    ejercicio: "",
+    dependencia: "",
+    proyecto: "",
+    recomendacion: "",
+  });
 
   const getEvaluatedPrograms = () => {
-    SimegService.getEvaluatedPrograms({})
+    SimegService.getEvaluatedPrograms(filter)
       .then((res) => {
         if (res.results) {
           setRecomendaciones(res.response.data);
         }
       })
       .catch((error) => console.error(error));
+  };
+
+  const handleChangeEjercicio = (e) => {
+    const año = e.target.value;
+    const filtro = {
+      id: "Evaluacion.EvaluacionEjercicio",
+      filter: "=",
+      value: año,
+    };
+
+    setValues({
+      ...values,
+      ejercicio: año,
+    });
+
+    setFilter((prevState) => ({
+      filtered: [...prevState.filtered, filtro],
+    }));
+  };
+  const handleChangeDependencia = (e) => {
+    const dependencia = e.target.value;
+    const filtro = { id: "Fto10.F10RamoId", filter: "=", value: dependencia };
+
+    setValues({
+      ...values,
+      dependencia: dependencia,
+    });
+    setFilter((prevState) => ({
+      filtered: [...prevState.filtered, filtro],
+    }));
   };
 
   useEffect(() => {
@@ -49,7 +84,7 @@ const Recomendaciones = () => {
         }),
         pointPadding: 0.4,
         pointPlacement: -0.2,
-        color: "#0066FF"
+        color: "#0066FF",
       },
       {
         name: "Recomendaciones Atendidas",
@@ -57,8 +92,7 @@ const Recomendaciones = () => {
         data: recomendaciones.map((item) => {
           return { y: item.Atendidas };
         }),
-        color: "#FF5AC8"
-        
+        color: "#FF5AC8",
       },
     ];
 
@@ -68,7 +102,7 @@ const Recomendaciones = () => {
 
   useEffect(() => {
     getEvaluatedPrograms();
-  }, []);
+  }, [filter]);
 
   return (
     <>
@@ -127,7 +161,9 @@ const Recomendaciones = () => {
                       label="Año"
                       size="small"
                       name="año"
-                      options={option}
+                      value={values.ejercicio}
+                      options={catEjercicio}
+                      onChange={handleChangeEjercicio}
                       sx={{ width: "100%" }}
                     />
                   </Grid>
@@ -136,7 +172,9 @@ const Recomendaciones = () => {
                       label="Dependencia"
                       size="small"
                       name="dependencia"
+                      value={values.dependencia}
                       options={option}
+                      onChange={handleChangeDependencia}
                       sx={{ width: "100%" }}
                     />
                   </Grid>
@@ -150,6 +188,7 @@ const Recomendaciones = () => {
                       label="Proyecto"
                       size="small"
                       name="proyecto"
+                      value={values.proyecto}
                       options={option}
                       sx={{ width: "100%" }}
                     />
@@ -159,6 +198,7 @@ const Recomendaciones = () => {
                       label="Recomendación"
                       size="small"
                       name="recomendacion"
+                      values={values.recomendacion}
                       options={option}
                       sx={{ width: "100%" }}
                     />

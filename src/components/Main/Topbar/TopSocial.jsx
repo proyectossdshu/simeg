@@ -24,19 +24,34 @@ const TopSocial = () => {
 
         <Box display={"flex"} alignContent={"center"} marginX={2}>
           <EmailIcon sx={{ color: "#000F9F", mr: 1 }} fontSize="small" />
-          <Link underline="none" component="a" color={"#000F9F"}>
+          <Link
+            underline="none"
+            component="a"
+            color={"#000F9F"}
+            href="https://peb.guanajuato.gob.mx/Home/Contacto"
+          >
             ESCRIBENOS
           </Link>
         </Box>
 
         <Box marginX={2}>
-          <Link underline="none" component="a" color={"#000F9F"}>
+          <Link
+            underline="none"
+            component="a"
+            color={"#000F9F"}
+            href="https://peb.guanajuato.gob.mx/Directorio"
+          >
             DIRECTORIO
           </Link>
         </Box>
 
         <Box marginX={2}>
-          <Link underline="none" component="a" color={"#000F9F"}>
+          <Link
+            underline="none"
+            component="a"
+            color={"#000F9F"}
+            href="https://transparencia.guanajuato.gob.mx/"
+          >
             TRANSPARENCIA
           </Link>
         </Box>
@@ -44,19 +59,31 @@ const TopSocial = () => {
 
       <Box display={"flex"} alignItems="center">
         <Box marginX={2}>
-          <Link underline="none" component="a" href="#">
+          <Link
+            underline="none"
+            component="a"
+            href="https://twitter.com/SedeshuGto"
+          >
             <TwitterIcon fontSize="small" sx={{ color: "#000F9F" }} />
           </Link>
         </Box>
 
         <Box marginX={2}>
-          <Link underline="none" component="a" href="#">
+          <Link
+            underline="none"
+            component="a"
+            href="https://www.facebook.com/pages/SedeshuGto/457581867618996?fref=ts"
+          >
             <FacebookIcon fontSize="small" sx={{ color: "#000F9F" }} />
           </Link>
         </Box>
 
         <Box marginX={2}>
-          <Link underline="none" component="a" href="#">
+          <Link
+            underline="none"
+            component="a"
+            href="https://www.youtube.com/user/SedeshuGto"
+          >
             <YouTubeIcon fontSize="small" sx={{ color: "#000F9F" }} />
           </Link>
         </Box>
