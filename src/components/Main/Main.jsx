@@ -67,7 +67,6 @@ const Main = ({ children }) => {
       <main>
         <Box height={{ xs: 56, sm: 64 }} />
         {children}
-        {/* <Divider /> */}
       </main>
       <Box sx={{backgroundColor:"#E4ECFA"}}>
         <Container paddingY={4}>
