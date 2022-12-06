@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { AppBar, Box, Divider, Slide } from "@mui/material";
+import { AppBar, Box, Slide } from "@mui/material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { useTheme } from "@mui/material/styles";
 import Container from "../../common/Container";

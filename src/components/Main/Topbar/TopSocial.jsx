@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Icon, Link } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import CallIcon from "@mui/icons-material/Call";
 import EmailIcon from "@mui/icons-material/Email";
 import TwitterIcon from "@mui/icons-material/Twitter";

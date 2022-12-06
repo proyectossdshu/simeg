@@ -29,7 +29,7 @@ const Topbar = ({ onSidebarOpen }) => {
           height={{ xs: 28, md: 32 }}
           width={45}
         >
-          <img width={"316px"} height={"100%"} src={GtoLogo} />
+          <img width={"316px"} height={"100%"} src={GtoLogo} alt="gtologo"/>
         </Box>
       </Box>
 

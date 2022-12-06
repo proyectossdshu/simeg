@@ -17,9 +17,7 @@ import { useTheme } from "@mui/material/styles";
 import Chart from "../Charts/Chart";
 import BasicTable from "../Table/BasicTable";
 
-import ico_chart from "../../assets/chart_programas.svg";
 import SimegService from "../../services/SimegService";
-import { lightBlue, pink } from "@mui/material/colors";
 
 const Programas = () => {
   const theme = useTheme();

@@ -6,9 +6,7 @@ import {
   Card,
   CardContent,
   Avatar,
-  Icon,
 } from "@mui/material";
-import SwipperEvaluacion from "../Swiper/SwiperEvaluacion";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { colors } from "@mui/material";

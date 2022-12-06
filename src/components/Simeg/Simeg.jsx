@@ -4,11 +4,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Slider from "react-slick";
 import {
   Box,
-  Button,
   Card,
-  CardContent,
   Grid,
-  Stack,
   Typography,
 } from "@mui/material";
 
@@ -96,7 +93,7 @@ const Simeg = () => {
                   display={"flex"}
                   flexDirection={"column"}
                 >
-                  <img src={item.img} />
+                  <img src={item.img} alt="simeg"/>
                 </Box>
               </Box>
             </Box>

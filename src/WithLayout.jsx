@@ -4,7 +4,6 @@ import { Paper } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { getTheme } from "../src/theme/index";
-import Main from "./components/Main/Main";
 import AOS from "aos";
 
 const WithLayout = ({ component: Component, layout: Layout }) => {

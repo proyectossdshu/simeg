@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Box, Card, Grid, Typography, CardContent } from "@mui/material";
-import ico_chart from "../../assets/chart_recomendaciones.svg";
 import Chart from "../Charts/Chart";
 import InputSelect from "../Select/BasicSelect";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -17,7 +16,7 @@ const Recomendaciones = () => {
   const [series, setSeries] = useState([]);
   const [categories, setCategories] = useState([]);
   const [recomendaciones, setRecomendaciones] = useState([]);
-  const [catRecomendaciones, setCatRecomendaciones] = useState([]);
+  const [catRecomendaciones] = useState([]);
   const [catEjercicio, setCatEjercicio] = useState([]);
   const [catDependencias, setCatDependencias] = useState([]);
   const [catProyectos, setCatProyectos] = useState([]);
@@ -114,6 +113,8 @@ const Recomendaciones = () => {
               case "simeg_proyectos":
                 setCatProyectos(res.response.catalogs[item.id]);
                 break;
+              default:
+                break;
             }
           });
         }
@@ -153,7 +154,7 @@ const Recomendaciones = () => {
     getEvaluatedPrograms(filter);
   }, [filter]);
 
-  console.log(filter);  
+  console.log(filter);
   return (
     <>
       <Grid

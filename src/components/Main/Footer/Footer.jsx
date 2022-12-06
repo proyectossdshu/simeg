@@ -1,7 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
@@ -12,7 +11,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
-import { Icon, List, ListItemText } from "@mui/material";
+import { Icon, List } from "@mui/material";
 
 const Footer = () => {
   const txtColor = "#000F9F";
@@ -213,94 +212,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-{
-  /* <Grid item xs={12} md={3}>
-        <Box width={"100%"}>
-          <Box height={24} width={35}>
-            <img src={logo_gto} alt="logoGto" />
-          </Box>
-        </Box>
-
-        <Box marginTop={6} marginBottom={4}>
-          <Typography component={"p"} color={txtColor} fontWeight={"500"}>
-            ATENCIÓN CIUDADANA
-          </Typography>
-        </Box>
-
-        <List>
-          {ATENCIONCIUDADANA.map((item, idx) => (
-            <Box component="li" marginBottom={2} key={idx}>
-              <Icon sx={{ color: `${txtColor}`, mr: 1 }} fontSize="small">
-                call
-              </Icon>
-              <Link
-                component="a"
-                underline="none"
-                href={item.href}
-                color={txtColor}
-              >
-                {item.titulo}
-              </Link>
-            </Box>
-          ))}
-        </List>
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <Box width={"100%"}>
-          <Box height={80} width={80}>
-            <img src={logo_gl} alt="logoGl" />
-          </Box>
-        </Box>
-
-        <Box marginTop={6} marginBottom={4}>
-          <Typography component={"p"} color={txtColor} fontWeight={"500"}>
-            ATENCIÓN CIUDADANA
-          </Typography>
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <Typography
-          align={"center"}
-          variant={"subtitle2"}
-          color="textSecondary"
-          gutterBottom
-        >
-          &copy; All rights reserved
-        </Typography>
-        <Typography
-          align={"center"}
-          variant={"caption"}
-          color="textSecondary"
-          component={"p"}
-        >
-          When you visit or interact with our sites, services or tools, we or
-          our authorised service providers may use cookies for storing
-          information to help provide you with a better, faster and safer
-          experience and for marketing purposes.
-        </Typography>
-      </Grid>
-      <Grid item xs={12} md={3}>
-        <Typography
-          align={"center"}
-          variant={"subtitle2"}
-          color="textSecondary"
-          gutterBottom
-        >
-          &copy; All rights reserved
-        </Typography>
-        <Typography
-          align={"center"}
-          variant={"caption"}
-          color="textSecondary"
-          component={"p"}
-        >
-          When you visit or interact with our sites, services or tools, we or
-          our authorised service providers may use cookies for storing
-          information to help provide you with a better, faster and safer
-          experience and for marketing purposes.
-        </Typography>
-      </Grid> */
-}
