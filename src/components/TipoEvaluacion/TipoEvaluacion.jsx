@@ -73,7 +73,7 @@ const TipoEvaluacion = () => {
             variant={"h4"}
             gutterBottom
           >
-            Tipo de Evaluaciones
+            Tipos de Evaluaciones
           </Box>
         </Box>
       </Container>

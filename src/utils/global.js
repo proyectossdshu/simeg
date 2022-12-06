@@ -2,7 +2,7 @@ var CryptoJS = require("crypto-js");
 const { 
   REACT_APP_BASE_URL,
   REACT_APP_BASE_VERSION,
-  REACT_APP_C27_KEY,
+  REACT_APP_SECRET_KEY,
   REACT_APP_DEBUG,
   REACT_APP_RECAPTCHA_SITE_KEY,
   REACT_APP_API_KEY
@@ -31,12 +31,12 @@ export const numberWithCommas = (x) => {
 export const setVars = (id, Value) => {
   var ciphertext = CryptoJS.AES.encrypt(
     JSON.stringify(Value),
-    REACT_APP_C27_KEY
+    REACT_APP_SECRET_KEY
   ).toString();
 
   sessionStorage.setItem(id, ciphertext);
 
-  var bytes = CryptoJS.AES.decrypt(ciphertext, REACT_APP_C27_KEY);
+  var bytes = CryptoJS.AES.decrypt(ciphertext, REACT_APP_SECRET_KEY);
   var originalText = bytes.toString(CryptoJS.enc.Utf8);
 
   return originalText;
@@ -47,7 +47,7 @@ export const getVars = (id, defaultvar = {}) => {
 
   let originalText = null;
   if (data !== null) {
-    var bytes = CryptoJS.AES.decrypt(data, REACT_APP_C27_KEY);
+    var bytes = CryptoJS.AES.decrypt(data, REACT_APP_SECRET_KEY);
     originalText = bytes.toString(CryptoJS.enc.Utf8);
   }
 
@@ -68,7 +68,7 @@ const substitutionsBeforeDecryption = new Map([
 export const encryptVars = (text) => {
   const encrypted = CryptoJS.AES.encrypt(
     JSON.stringify(text),
-    REACT_APP_C27_KEY
+    REACT_APP_SECRET_KEY
   ).toString();
 
   return encrypted.replace(
@@ -86,7 +86,7 @@ export const decryptVars = (text, defaultvar) => {
   );
 
   if (toDecrypt !== null) {
-    const bytes = CryptoJS.AES.decrypt(toDecrypt, REACT_APP_C27_KEY);
+    const bytes = CryptoJS.AES.decrypt(toDecrypt, REACT_APP_SECRET_KEY);
     decrypted = bytes.toString(CryptoJS.enc.Utf8);
   }
 

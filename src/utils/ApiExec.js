@@ -1,7 +1,14 @@
 import Swal from "sweetalert2";
 import { isEmptyOrNullObject } from "./validations";
-import { URL_PUBLICA, setVars, getVars, encryptVars, decryptVars, DEBUG, TOKEN } from "./global";
-
+import {
+  URL_PUBLICA,
+  setVars,
+  getVars,
+  encryptVars,
+  decryptVars,
+  DEBUG,
+  TOKEN,
+} from "./global";
 
 export const ApiExec = (data, api, method = "POST") => {
   let headers = new Headers();
@@ -10,7 +17,7 @@ export const ApiExec = (data, api, method = "POST") => {
     const userData = getVars("Token");
     headers.append("Authorization", `API ${TOKEN}`);
   } */
-  
+
   if (DEBUG) {
     headers.append("Content-Type", "application/json");
   } else {
@@ -24,7 +31,7 @@ export const ApiExec = (data, api, method = "POST") => {
       headers: headers,
     };
     let url = "";
-
+    
     switch (method) {
       case "GET":
         url = new URL(URL_PUBLICA + api);
@@ -121,14 +128,10 @@ export const ApiExec = (data, api, method = "POST") => {
         });
       });
   });
-}
+};
 
-export const downloadFile = ({
-  data,
-  api,
-  method = "GET"
-}) => {
-  let fileName = '';
+export const downloadFile = ({ data, api, method = "GET" }) => {
+  let fileName = "";
   let headers = new Headers();
 
   if (!isEmptyOrNullObject(window.sessionStorage.getItem("userData"))) {
@@ -152,7 +155,7 @@ export const downloadFile = ({
     };
     let url = "";
 
-    if (method === 'GET') {
+    if (method === "GET") {
       url = new URL(URL_PUBLICA + api);
       delete requestInfo.body;
       if (!isEmptyOrNullObject(data)) {
@@ -168,15 +171,14 @@ export const downloadFile = ({
     fetch(link, requestInfo)
       .then((response) => {
         if (response.ok) {
-          const header = response.headers.get('Content-Disposition');
-          const parts = header.split(';');
+          const header = response.headers.get("Content-Disposition");
+          const parts = header.split(";");
           // fileName = parts[1].split('=')[1];
-          fileName = parts[1].split('=')[1].replaceAll("\"", "");
-          return response.blob()
+          fileName = parts[1].split("=")[1].replaceAll('"', "");
+          return response.blob();
         }
         throw new Error("Error=>[url]: ", response.statusText);
-      }
-      )
+      })
       .then((blob) => {
         // Create blob link to download
         const url = window.URL.createObjectURL(new Blob([blob]));

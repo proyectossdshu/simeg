@@ -6,34 +6,31 @@ import InputSelect from "../Select/BasicSelect";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import SimegService from "../../services/SimegService";
+import CatalogService from "../../services/CatalogService";
 
 const Recomendaciones = () => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"), {
     defaultMatches: true,
   });
-  const option = [
-    { value: 1, label: "Opcion1" },
-    { value: 2, label: "Opcion2" },
-  ];
 
   const [series, setSeries] = useState([]);
   const [categories, setCategories] = useState([]);
   const [recomendaciones, setRecomendaciones] = useState([]);
-  const [catEjercicio, setCatEjercicio] = useState([
-    { value: 2015, label: "2015" },
-    { value: 2016, label: "2016" },
-  ]);
+  const [catRecomendaciones, setCatRecomendaciones] = useState([]);
+  const [catEjercicio, setCatEjercicio] = useState([]);
+  const [catDependencias, setCatDependencias] = useState([]);
+  const [catProyectos, setCatProyectos] = useState([]);
   const [filter, setFilter] = useState({ filtered: [] });
   const [values, setValues] = useState({
-    ejercicio: "",
+    ejercicio: 2016,
     dependencia: "",
     proyecto: "",
     recomendacion: "",
   });
 
-  const getEvaluatedPrograms = () => {
-    SimegService.getEvaluatedPrograms(filter)
+  const getEvaluatedPrograms = (_filter) => {
+    SimegService.getEvaluatedPrograms(_filter)
       .then((res) => {
         if (res.results) {
           setRecomendaciones(res.response.data);
@@ -72,6 +69,58 @@ const Recomendaciones = () => {
     }));
   };
 
+  const handleChangeProyecto = (e) => {
+    const proyecto = e.target.value;
+    const filtro = { id: "Fto10.Fto10ClaveQP", filter: "=", value: proyecto };
+
+    setValues({
+      ...values,
+      proyecto: proyecto,
+    });
+    setFilter((prevState) => ({
+      filtered: [...prevState.filtered, filtro],
+    }));
+  };
+
+  useEffect(() => {
+    const catalogsParams = [
+      {
+        id: "simeg_ejercicios",
+      },
+      {
+        id: "simeg_dependencias",
+      },
+      {
+        id: "simeg_proyectos",
+      },
+      {
+        id: "simeg_recomendaciones",
+      },
+    ];
+
+    CatalogService.getCatalogs(catalogsParams)
+      .then((res) => {
+        if (res.results) {
+          catalogsParams.forEach((item) => {
+            switch (item.id) {
+              case "simeg_dependencias":
+                setCatDependencias(res.response.catalogs[item.id]);
+                break;
+
+              case "simeg_ejercicios":
+                setCatEjercicio(res.response.catalogs[item.id]);
+                break;
+
+              case "simeg_proyectos":
+                setCatProyectos(res.response.catalogs[item.id]);
+                break;
+            }
+          });
+        }
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   useEffect(() => {
     const categories = recomendaciones.map((item) => item.EvaluacionNombre);
 
@@ -101,9 +150,10 @@ const Recomendaciones = () => {
   }, [recomendaciones]);
 
   useEffect(() => {
-    getEvaluatedPrograms();
+    getEvaluatedPrograms(filter);
   }, [filter]);
 
+  console.log(filter);  
   return (
     <>
       <Grid
@@ -173,7 +223,7 @@ const Recomendaciones = () => {
                       size="small"
                       name="dependencia"
                       value={values.dependencia}
-                      options={option}
+                      options={catDependencias}
                       onChange={handleChangeDependencia}
                       sx={{ width: "100%" }}
                     />
@@ -189,7 +239,8 @@ const Recomendaciones = () => {
                       size="small"
                       name="proyecto"
                       value={values.proyecto}
-                      options={option}
+                      options={catProyectos}
+                      onChange={handleChangeProyecto}
                       sx={{ width: "100%" }}
                     />
                   </Grid>
@@ -199,7 +250,7 @@ const Recomendaciones = () => {
                       size="small"
                       name="recomendacion"
                       values={values.recomendacion}
-                      options={option}
+                      options={catRecomendaciones}
                       sx={{ width: "100%" }}
                     />
                   </Grid>
