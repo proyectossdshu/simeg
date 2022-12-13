@@ -142,7 +142,7 @@ const Recomendaciones = () => {
     getEvaluatedPrograms(filter);
   }, [filter]);
 
-  console.log(filter);
+  //console.log(filter);
   return (
     <>
       <Grid
