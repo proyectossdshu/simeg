@@ -80,7 +80,7 @@ const Programas = () => {
       .finally(() => setIsLoading(false));
   };
 
-  const handleChangePage = ({page, pageSize}) => {
+  const handleChangePage = ({ page, pageSize }) => {
     const start = page * pageSize;
     const end = start + pageSize;
 
@@ -88,7 +88,7 @@ const Programas = () => {
     setProgramasFiltered(dataFiltered);
     setPage(page);
     setPageSize(pageSize);
-  }
+  };
 
   useEffect(() => {
     const categories = programas.map((item) => item.F1);
@@ -99,8 +99,7 @@ const Programas = () => {
         data: programas.map((item, i) => {
           return { y: item.F2 };
         }),
-        color: "#0066FF"
-        
+        color: "#0066FF",
       },
     ];
     setCategorie(categories);
@@ -135,38 +134,41 @@ const Programas = () => {
           borderRadius={4}
         >
           <Box component={CardContent}>
-            <Box marginBottom={4} display={"flex"} justifyContent={"flex-end"}>
-              <Tooltip title="Gráfica">
-                <IconButton
-                  className={isChart ? `button_active` : ""}
-                  color="primary"
-                  variant="contained"
-                  component="span"
-                  onClick={() => handleChangeFormat("chart")}
-                >
-                  <BarChart fontSize="small" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Listado">
-                <IconButton
-                  className={active ? `button_active` : ""}
-                  color="primary"
-                  variant="contained"
-                  component="span"
-                  onClick={() => handleChangeFormat("table")}
-                >
-                  <TableRows fontSize="small" />
-                </IconButton>
-              </Tooltip>
+            <Box
+              marginBottom={4}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Typography fontWeight={700}>Programas Evaluados</Typography>
+              <Box>
+                <Tooltip title="Gráfica">
+                  <IconButton
+                    className={isChart ? `button_active` : ""}
+                    color="primary"
+                    variant="contained"
+                    component="span"
+                    onClick={() => handleChangeFormat("chart")}
+                  >
+                    <BarChart fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Listado">
+                  <IconButton
+                    className={active ? `button_active` : ""}
+                    color="primary"
+                    variant="contained"
+                    component="span"
+                    onClick={() => handleChangeFormat("table")}
+                  >
+                    <TableRows fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
             </Box>
 
             <Box marginBottom={4}>
               {isChart ? (
-                <Chart
-                  title={"Programas Evaluados"}
-                  categories={categorie}
-                  series={series}
-                />
+                <Chart categories={categorie} series={series} />
               ) : (
                 <BasicTable
                   hcolumns={colums}

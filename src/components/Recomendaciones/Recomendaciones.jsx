@@ -55,18 +55,6 @@ const Recomendaciones = () => {
       filtered: [...prevState.filtered, filtro],
     }));
   };
-  const handleChangeDependencia = (e) => {
-    const dependencia = e.target.value;
-    const filtro = { id: "Fto10.F10RamoId", filter: "=", value: dependencia };
-
-    setValues({
-      ...values,
-      dependencia: dependencia,
-    });
-    setFilter((prevState) => ({
-      filtered: [...prevState.filtered, filtro],
-    }));
-  };
 
   const handleChangeProyecto = (e) => {
     const proyecto = e.target.value;
@@ -205,7 +193,8 @@ const Recomendaciones = () => {
             borderRadius={4}
           >
             <Box component={CardContent}>
-              <Box marginBottom={2}>
+              <Typography fontWeight={600}>Recomendaciones</Typography>
+              <Box marginBottom={5} marginTop={3}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
                     <InputSelect
@@ -220,23 +209,7 @@ const Recomendaciones = () => {
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <InputSelect
-                      label="Dependencia"
-                      size="small"
-                      name="dependencia"
-                      value={values.dependencia}
-                      options={catDependencias}
-                      onChange={handleChangeDependencia}
-                      sx={{ width: "100%" }}
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-
-              <Box marginBottom={3}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
-                    <InputSelect
-                      label="Proyecto"
+                      label="Proyectos"
                       size="small"
                       name="proyecto"
                       value={values.proyecto}
@@ -245,24 +218,11 @@ const Recomendaciones = () => {
                       sx={{ width: "100%" }}
                     />
                   </Grid>
-                  <Grid item xs={12} md={6}>
-                    <InputSelect
-                      label="Recomendación"
-                      size="small"
-                      name="recomendacion"
-                      values={values.recomendacion}
-                      options={catRecomendaciones}
-                      sx={{ width: "100%" }}
-                    />
-                  </Grid>
                 </Grid>
               </Box>
+
               <Box marginBottom={4}>
-                <Chart
-                  title={"Recomendaciones"}
-                  series={series}
-                  categories={categories}
-                />
+                <Chart series={series} categories={categories} />
               </Box>
             </Box>
           </Box>
