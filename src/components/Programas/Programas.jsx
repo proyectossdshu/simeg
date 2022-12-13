@@ -32,8 +32,10 @@ const Programas = () => {
       columnAction: false,
     },
     {
-      label: "PSE",
+      label: "Programas Sociales Estatales",
       id: "F2",
+      width: 250,
+      numeric: true,
       columnAction: false,
     },
   ];
