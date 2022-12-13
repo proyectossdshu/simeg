@@ -8,6 +8,7 @@ import Topbar from "./Topbar/Topbar";
 import Sidebar from "./Sidebar/Sidebar";
 import TopSocial from "./Topbar/TopSocial";
 import Footer from "./Footer/Footer";
+import { navItems } from "../../data/navigation";
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger();
@@ -63,12 +64,13 @@ const Main = ({ children }) => {
         onClose={handleSidebarClose}
         open={openSidebar}
         variant="temporary"
+        navItems={navItems}
       />
       <main>
         <Box height={{ xs: 56, sm: 64 }} />
         {children}
       </main>
-      <Box sx={{backgroundColor:"#E4ECFA"}}>
+      <Box sx={{ backgroundColor: "#E4ECFA" }}>
         <Container paddingY={4}>
           <Footer />
         </Container>

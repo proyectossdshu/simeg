@@ -5,16 +5,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import GtoLogo from "../../../assets/img/logo-gto.png";
 import SimegLogo from "../../../assets/img/logo-simeg.png";
 import { Link } from "react-scroll";
-import { Stack } from "@mui/system";
+import { navItems } from "../../../data/navigation";
 
 const Topbar = ({ onSidebarOpen }) => {
-  const navItems = [
-    { name: "Inicio", anchor: "incio" },
-    { name: "¿Qué es el simeg?", anchor: "simeg" },
-    { name: "Recomendaciones", anchor: "recomendaciones" },
-    { name: "Programas evaluados", anchor: "programas" },
-  ];
-
   return (
     <Box
       display={"flex"}
@@ -31,7 +24,7 @@ const Topbar = ({ onSidebarOpen }) => {
           height={{ xs: 28, md: 62 }}
           width={65}
         >
-          <img  width={"180px"} height={"80%"} src={GtoLogo} alt="gtologo" />
+          <img width={"180px"} height={"80%"} src={GtoLogo} alt="gtologo" />
           <img width={"100px"} height={"100%"} src={SimegLogo} alt="gtologo" />
         </Box>
       </Box>

@@ -1,9 +1,10 @@
 import React from "react";
 import { Box, Drawer } from "@mui/material";
-import  PropTypes from "prop-types";
+import PropTypes from "prop-types";
+import SidebarNav from "./SidebarNav";
 
 const Sidebar = (props) => {
-  const { pages, open, variant, onClose, ...rest } = props;
+  const { navItems, open, variant, onClose, ...rest } = props;
 
   return (
     <Drawer
@@ -25,7 +26,7 @@ const Sidebar = (props) => {
           padding: 1,
         }}
       >
-        {/* <SidebarNav pages={pages} onClose={onClose} /> */}
+        <SidebarNav navItems={navItems} onClose={onClose} />
       </Box>
     </Drawer>
   );

@@ -47,7 +47,6 @@ const Chart = (props) => {
           borderWidth: 0,
           grouping: false,
           shadow: false,
-          borderWidth: 0,
           dataLabels: {
             enabled: true,
             style: { fontSize: "8px" },
