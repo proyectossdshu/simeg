@@ -3,7 +3,9 @@ import React from "react";
 import { Box, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import GtoLogo from "../../../assets/img/logo-gto.png";
+import SimegLogo from "../../../assets/img/logo-simeg.png";
 import { Link } from "react-scroll";
+import { Stack } from "@mui/system";
 
 const Topbar = ({ onSidebarOpen }) => {
   const navItems = [
@@ -25,11 +27,12 @@ const Topbar = ({ onSidebarOpen }) => {
           display={"flex"}
           alignItems="baseline"
           underline="none"
-          title="gto"
-          height={{ xs: 28, md: 32 }}
-          width={45}
+          //title="gto"
+          height={{ xs: 28, md: 62 }}
+          width={65}
         >
-          <img width={"316px"} height={"100%"} src={GtoLogo} alt="gtologo"/>
+          <img  width={"180px"} height={"80%"} src={GtoLogo} alt="gtologo" />
+          <img width={"100px"} height={"100%"} src={SimegLogo} alt="gtologo" />
         </Box>
       </Box>
 
