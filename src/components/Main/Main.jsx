@@ -8,7 +8,7 @@ import Topbar from "./Topbar/Topbar";
 import Sidebar from "./Sidebar/Sidebar";
 import TopSocial from "./Topbar/TopSocial";
 import Footer from "./Footer/Footer";
-import { navItems } from "../../data/navigation";
+import { navItems } from "../../data/simeg";
 
 const HideOnScroll = ({ children }) => {
   const trigger = useScrollTrigger();

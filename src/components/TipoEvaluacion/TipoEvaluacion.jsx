@@ -1,26 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  Card,
-  CardContent,
-  Avatar,
-} from "@mui/material";
+import { Box, Typography, Card, CardContent, Avatar } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { colors } from "@mui/material";
 import Slider from "react-slick/lib/slider";
 
-import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import SegmentIcon from "@mui/icons-material/Segment";
-import InsightsIcon from "@mui/icons-material/Insights";
-import EngineeringIcon from "@mui/icons-material/Engineering";
-import FactCheckIcon from "@mui/icons-material/FactCheck";
-import DonutLargeIcon from "@mui/icons-material/DonutLarge";
-import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
-import GroupIcon from "@mui/icons-material/Group";
+import { Evaluacion } from "../../data/simeg";
+import Container from "../../common/Container";
 
 const TipoEvaluacion = () => {
   const theme = useTheme();
@@ -54,9 +39,9 @@ const TipoEvaluacion = () => {
   const sliderOpts = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 800,
     slidesToShow,
-    slidesToScroll: 1,
+    slidesToScroll: 2,
     arrows: false,
     //autoplay: true,
   };
@@ -78,72 +63,8 @@ const TipoEvaluacion = () => {
 
       <Box>
         <Slider {...sliderOpts}>
-          {[
-            {
-              title: "Diagnóstico",
-              subtitle:
-                "We design and develop amazing, lightning fast, and high-converting websites that make your business grow.",
-              icon: <ContentPasteSearchIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.purple,
-            },
-            {
-              title: "Diseño",
-              subtitle:
-                "We design intuitive web & mobile apps focused on driving user engagement and increasing users retention.",
-              icon: <AutoFixHighIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.green,
-            },
-            {
-              title: "Linea Base",
-              subtitle:
-                "We transform businesses into world-class brands by going through a well thought brand identity design process.",
-              icon: <SegmentIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.amber,
-            },
-            {
-              title: "Específica de Desempeño",
-              subtitle:
-                "We help you transform your idea into a live, intuitive and scalable digital product that your users will use and love.",
-              icon: <InsightsIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.pink,
-            },
-            {
-              title: "Procesos",
-              subtitle:
-                "We help you optimize your website or mobile app flow to increase conversion rates and retention to drive growth.",
-              icon: <EngineeringIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.blue,
-            },
-            {
-              title: "Consistencia y Resultados",
-              subtitle:
-                "We help your business gain leverage and efficiency through automation using simple, yet powerful NoCode tools.",
-              icon: <FactCheckIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.teal,
-            },
-            {
-              title: "Indicadores",
-              subtitle:
-                "We help your business gain leverage and efficiency through automation using simple, yet powerful NoCode tools.",
-              icon: <DonutLargeIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.purple,
-            },
-            {
-              title: "Impacto",
-              subtitle:
-                "We help your business gain leverage and efficiency through automation using simple, yet powerful NoCode tools.",
-              icon: <PublishedWithChangesIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.green,
-            },
-            {
-              title: "Social",
-              subtitle:
-                "We help your business gain leverage and efficiency through automation using simple, yet powerful NoCode tools.",
-              icon: <GroupIcon sx={{ width: 48, height: 48 }} />,
-              color: colors.amber,
-            },
-          ].map((item, i) => (
-            <Box padding={{ xs: 1, md: 2, lg: 3 }} key={i}>
+          {Evaluacion.map((item) => (
+            <Box padding={{ xs: 1, md: 2, lg: 3 }} key={item.id}>
               <Box
                 component={Card}
                 boxShadow={{ xs: 1, sm: 3 }}
@@ -181,9 +102,12 @@ const TipoEvaluacion = () => {
                   >
                     {item.title}
                   </Box>
-                  <Typography align={"center"} color="textSecondary">
-                    {item.subtitle}
-                  </Typography>
+
+                  <Box>
+                    <Typography align={"center"} color="textSecondary">
+                      {item.subtitle}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
             </Box>

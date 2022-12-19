@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Slider from "react-slick";
-import {
-  Box,
-  Card,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 
 import BanHome from "../../assets/img/BanHome.png";
+import { summary } from "../../data/simeg";
 
 const Simeg = () => {
   const theme = useTheme();
@@ -45,13 +41,7 @@ const Simeg = () => {
           color={"textSecondary"}
           data-aos={isMd ? "fade-right" : "fade-up"}
         >
-          We are a small agency with a talented team of designers & developers.
-          Unlike huge agencies, we will treat your project as ours, and will
-          walk you through our process by hand.
-          <br />
-          We are a small agency with a talented team of designers & developers.
-          Unlike huge agencies, we will treat your project as ours, and will
-          walk you through our process by hand.
+          {summary.simeg}
         </Typography>
       </Box>
     );
@@ -93,7 +83,7 @@ const Simeg = () => {
                   display={"flex"}
                   flexDirection={"column"}
                 >
-                  <img src={item.img} alt="simeg"/>
+                  <img src={item.img} alt="simeg" />
                 </Box>
               </Box>
             </Box>

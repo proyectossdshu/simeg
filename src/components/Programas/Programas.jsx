@@ -16,6 +16,7 @@ import { useTheme } from "@mui/material/styles";
 
 import Chart from "../Charts/Chart";
 import BasicTable from "../Table/BasicTable";
+import { summary } from "../../data/simeg";
 
 import SimegService from "../../services/SimegService";
 
@@ -198,16 +199,10 @@ const Programas = () => {
             Por Ejercicio Fiscal
           </Box>
           <Typography variant={"h6"} component={"p"} color={"textSecondary"}>
-            Lorem ipsum dolor sit amet,
+            {summary.evaluacion.body1}
             <br />
-            consectetur adipiscing elit. Id ultricies sed ultricies fringilla
-            commodo. Lorem ipsum dolor sit amet,
             <br />
-            consectetur adipiscing elit. Id ultricies sed ultricies fringilla
-            commodo. Lorem ipsum dolor sit amet,
-            <br />
-            consectetur adipiscing elit. Id ultricies sed ultricies fringilla
-            commodo.
+            {summary.evaluacion.body2}
           </Typography>
         </Box>
       </Grid>

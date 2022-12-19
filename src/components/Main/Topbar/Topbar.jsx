@@ -5,7 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import GtoLogo from "../../../assets/img/logo-gto.png";
 import SimegLogo from "../../../assets/img/logo-simeg.png";
 import { Link } from "react-scroll";
-import { navItems } from "../../../data/navigation";
+import { navItems } from "../../../data/simeg";
 
 const Topbar = ({ onSidebarOpen }) => {
   return (
