@@ -29,45 +29,47 @@ const Recomendaciones = () => {
     recomendacion: "",
   });
 
-  const getEvaluatedPrograms = (_filter) => {
-    SimegService.getEvaluatedPrograms(_filter)
+  const getEvaluatedProgramsYear = () => {
+    SimegService.getEvaluatedprogramsYear({})
       .then((res) => {
         if (res.results) {
-          setRecomendaciones(res.response.data);
+          const {
+            ProgramasEvaluados,
+            DependenciasInvolucradas,
+            RecomendacionesAtendidas,
+          } = res.response.series;
+
+          const _series = [
+            {
+              name: "Programas Evaluados",
+              showInLegend: true,
+              data: ProgramasEvaluados,
+              pointPadding: 0.4,
+              pointPlacement: -0.4,
+              color: "#0082FF",
+            },
+            {
+              name: "Recomendaciones Atendidas",
+              showInLegend: true,
+              data: RecomendacionesAtendidas,
+              pointPadding: 0.4,
+              pointPlacement: -0.2,
+              color: "#FF5AC8",
+            },
+            {
+              name: "Dependencias Involucradas",
+              showInLegend: true,
+              data: DependenciasInvolucradas,
+              pointPadding: 0.4,
+              pointPlacement: 0,
+              color: "#32AA00",
+            },
+          ];
+          setSeries(_series);
+          setCategories(res.response.categories);
         }
       })
       .catch((error) => console.error(error));
-  };
-
-  const handleChangeEjercicio = (e) => {
-    const año = e.target.value;
-    const filtro = {
-      id: "Evaluacion.EvaluacionEjercicio",
-      filter: "=",
-      value: año,
-    };
-
-    setValues({
-      ...values,
-      ejercicio: año,
-    });
-
-    setFilter((prevState) => ({
-      filtered: [...prevState.filtered, filtro],
-    }));
-  };
-
-  const handleChangeProyecto = (e) => {
-    const proyecto = e.target.value;
-    const filtro = { id: "Fto10.Fto10ClaveQP", filter: "=", value: proyecto };
-
-    setValues({
-      ...values,
-      proyecto: proyecto,
-    });
-    setFilter((prevState) => ({
-      filtered: [...prevState.filtered, filtro],
-    }));
   };
 
   useEffect(() => {
@@ -112,6 +114,41 @@ const Recomendaciones = () => {
   }, []);
 
   useEffect(() => {
+    getEvaluatedProgramsYear();
+  }, []);
+
+  const handleChangeEjercicio = (e) => {
+    const año = e.target.value;
+    const filtro = {
+      id: "Evaluacion.EvaluacionEjercicio",
+      filter: "=",
+      value: año,
+    };
+
+    setValues({
+      ...values,
+      ejercicio: año,
+    });
+
+    setFilter((prevState) => ({
+      filtered: [...prevState.filtered, filtro],
+    }));
+  };
+
+  const handleChangeProyecto = (e) => {
+    const proyecto = e.target.value;
+    const filtro = { id: "Fto10.Fto10ClaveQP", filter: "=", value: proyecto };
+
+    setValues({
+      ...values,
+      proyecto: proyecto,
+    });
+    setFilter((prevState) => ({
+      filtered: [...prevState.filtered, filtro],
+    }));
+  };
+
+  /* useEffect(() => {
     const categories = recomendaciones.map((item) => item.EvaluacionNombre);
 
     const series = [
@@ -137,22 +174,33 @@ const Recomendaciones = () => {
 
     setCategories(categories);
     setSeries(series);
-  }, [recomendaciones]);
+  }, [recomendaciones]); */
 
-  useEffect(() => {
-    getEvaluatedPrograms(filter);
-  }, [filter]);
-
-  //console.log(filter);
   return (
     <>
+      <Box marginBottom={4}>
+        <Box
+          component={Typography}
+          fontWeight={700}
+          variant={"h4"}
+          gutterBottom
+        >
+          Recomendaciones Atendidas
+        </Box>
+        <Typography variant={"h6"} component={"p"} color={"textSecondary"}>
+          {summary.recomendacion.body1}
+          <br />
+          {summary.recomendacion.body2}
+        </Typography>
+      </Box>
       <Grid
         container
         spacing={4}
         direction={"row"} //isMd ? "row" : "column-reverse"
         id="recomendaciones"
+        marginBottom={4}
       >
-        <Grid item xs={12} md={6} data-aos={isMd ? "fade-right" : "fade-up"}>
+        {/* <Grid item xs={12} md={6} data-aos={isMd ? "fade-right" : "fade-up"}>
           <Box marginBottom={4}>
             <Box
               component={Typography}
@@ -169,7 +217,8 @@ const Recomendaciones = () => {
               {summary.recomendacion.body2}
             </Typography>
           </Box>
-        </Grid>
+         
+        </Grid> */}
 
         <Grid
           item
@@ -177,7 +226,7 @@ const Recomendaciones = () => {
           justifyContent="center"
           alignItems="center"
           xs={12}
-          md={6}
+          md={12}
           data-aos={isMd ? "fade-left" : "fade-up"}
         >
           <Box
@@ -188,7 +237,41 @@ const Recomendaciones = () => {
             borderRadius={4}
           >
             <Box component={CardContent}>
-              <Typography fontWeight={600}>Recomendaciones</Typography>
+              <Typography fontWeight={600}>Estadísticas Anuales</Typography>
+              <Box marginBottom={4} marginTop={3}>
+                <Chart series={series} categories={categories} />
+              </Box>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        spacing={4}
+        direction={"row"} //isMd ? "row" : "column-reverse"
+        id="recomendaciones"
+      >
+        <Grid
+          item
+          container
+          justifyContent="center"
+          alignItems="center"
+          xs={12}
+          md={12}
+          data-aos={isMd ? "fade-left" : "fade-up"}
+        >
+          <Box
+            component={Card}
+            boxShadow={4}
+            height={"100%"}
+            width={"100%"}
+            borderRadius={4}
+          >
+            <Box component={CardContent}>
+              <Typography fontWeight={600}>
+                Programas y Recomendaciones
+              </Typography>
               <Box marginBottom={5} marginTop={3}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>

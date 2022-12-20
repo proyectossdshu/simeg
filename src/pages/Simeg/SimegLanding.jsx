@@ -16,11 +16,11 @@ const SimegLanding = () => {
       </Container>
       <Box bgcolor={theme.palette.alternate.main}>
         <Container>
-          <Recomendaciones />
+          <Programas />
         </Container>
       </Box>
       <Container>
-        <Programas />
+        <Recomendaciones />
       </Container>
       <Box bgcolor={theme.palette.alternate.main} position={"relative"}>
         <Container paddingX={"0 !important"} maxWidth={"100%"}>

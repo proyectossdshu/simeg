@@ -100,7 +100,13 @@ const Programas = () => {
         data: programas.map((item, i) => {
           return { y: item.F2 };
         }),
-        color: "#0066FF",
+        color: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [0, "#0066FF"],
+            [1, "#000F9F"],
+          ],
+        },
       },
     ];
     setCategorie(categories);

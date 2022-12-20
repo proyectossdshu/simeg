@@ -8,6 +8,14 @@ class SimegService {
       .catch((e) => e);
   };
 
+  getEvaluatedprogramsYear = (params) => {
+    return ApiExec(params, "simeg/get-evaluated-programs-year", "POST")
+      .then((res) => res)
+      .then((res) => res)
+      .catch((e) => e);
+  };
+
+  ///Eliminar api
   getEvaluatedPrograms = (params) => {
     return ApiExec(params, "simeg/get-evaluated-programs", "POST")
       .then((res) => res)
