@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Box, Card, Grid, Typography, CardContent } from "@mui/material";
+import {
+  Box,
+  Card,
+  Grid,
+  Typography,
+  CardContent,
+  CircularProgress,
+} from "@mui/material";
 import Chart from "../Charts/Chart";
 import InputSelect from "../Select/BasicSelect";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -7,30 +14,44 @@ import { useTheme } from "@mui/material/styles";
 import SimegService from "../../services/SimegService";
 import CatalogService from "../../services/CatalogService";
 import { summary } from "../../data/simeg";
+import { blue, pink } from "@mui/material/colors";
 
 const Recomendaciones = () => {
+  //Variables
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md"), {
     defaultMatches: true,
   });
 
+  //States
+  const [loadingChartPrimary, setLoadingPrimary] = useState(false);
+  const [loadingChartSecondary, setLoadingSecondary] = useState(false);
   const [series, setSeries] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [seriesDep, setSeriesDep] = useState([]);
+  const [categoriesDep, setCategoriesDep] = useState([]);
   const [recomendaciones, setRecomendaciones] = useState([]);
   const [catRecomendaciones] = useState([]);
   const [catEjercicio, setCatEjercicio] = useState([]);
   const [catDependencias, setCatDependencias] = useState([]);
   const [catProyectos, setCatProyectos] = useState([]);
-  const [filter, setFilter] = useState({ filtered: [] });
   const [values, setValues] = useState({
     ejercicio: 2016,
-    dependencia: "",
     proyecto: "",
-    recomendacion: "",
+  });
+  const [filterYear, setFilterYear] = useState({
+    filtered: [
+      {
+        id: "EvaluacionEjercicio",
+        filter: "=",
+        value: values.ejercicio,
+      },
+    ],
   });
 
+  //Functions API's
   const getEvaluatedProgramsYear = () => {
-    SimegService.getEvaluatedprogramsYear({})
+    SimegService.getEvaluatedProgramsYear({})
       .then((res) => {
         if (res.results) {
           const {
@@ -70,6 +91,63 @@ const Recomendaciones = () => {
         }
       })
       .catch((error) => console.error(error));
+  };
+
+  const getEvaluatedProgramsDep = () => {
+    setLoadingSecondary(true);
+    SimegService.getEvaluatedProgramsDep({
+      filtered: filterYear.filtered,
+    })
+      .then((res) => {
+        if (res.results) {
+          const {
+            ProgramasEvaluados,
+            RecomendacionesAtendidas,
+            TotalProgramas,
+            TotalRecomendaciones,
+          } = res.response.series;
+
+          const _series = [
+            {
+              name: "Total de Programas",
+              showInLegend: true,
+              data: TotalProgramas,
+              pointPadding: 0.3,
+              pointPlacement: -0.2,
+              color: blue[700],
+            },
+            {
+              name: "Programas Evaluados",
+              showInLegend: true,
+              data: ProgramasEvaluados,
+              pointPadding: 0.4,
+              pointPlacement: -0.2,
+              color: blue[200],
+            },
+            {
+              name: "Total Recomendaciones",
+              showInLegend: true,
+              data: TotalRecomendaciones,
+              pointPadding: 0.3,
+              pointPlacement: 0.2,
+              color: "#FF5AC8",
+            },
+            {
+              name: "Recomendaciones Atendidas",
+              showInLegend: true,
+              data: RecomendacionesAtendidas,
+              pointPadding: 0.4,
+              pointPlacement: 0.2,
+              color: pink[200],
+            },
+          ];
+
+          setCategoriesDep(res.response.categories);
+          setSeriesDep(_series);
+        }
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoadingSecondary(false));
   };
 
   useEffect(() => {
@@ -117,22 +195,30 @@ const Recomendaciones = () => {
     getEvaluatedProgramsYear();
   }, []);
 
+  useEffect(() => {
+    getEvaluatedProgramsDep();
+  }, [filterYear]);
+
+  //Function and Handlers
   const handleChangeEjercicio = (e) => {
     const año = e.target.value;
-    const filtro = {
-      id: "Evaluacion.EvaluacionEjercicio",
-      filter: "=",
-      value: año,
-    };
 
     setValues({
       ...values,
       ejercicio: año,
     });
 
-    setFilter((prevState) => ({
-      filtered: [...prevState.filtered, filtro],
-    }));
+    if (año !== "") {
+      const filtro = {
+        id: "EvaluacionEjercicio",
+        filter: "=",
+        value: año,
+      };
+
+      setFilterYear((prevState) => ({
+        filtered: [filtro],
+      }));
+    }
   };
 
   const handleChangeProyecto = (e) => {
@@ -143,38 +229,10 @@ const Recomendaciones = () => {
       ...values,
       proyecto: proyecto,
     });
-    setFilter((prevState) => ({
+    /* setFilter((prevState) => ({
       filtered: [...prevState.filtered, filtro],
-    }));
+    })); */
   };
-
-  /* useEffect(() => {
-    const categories = recomendaciones.map((item) => item.EvaluacionNombre);
-
-    const series = [
-      {
-        name: "Total de Recomendaciones",
-        showInLegend: false,
-        data: recomendaciones.map((item) => {
-          return { y: item.TotalRecomendaciones };
-        }),
-        pointPadding: 0.4,
-        pointPlacement: -0.2,
-        color: "#0066FF",
-      },
-      {
-        name: "Recomendaciones Atendidas",
-        showInLegend: false,
-        data: recomendaciones.map((item) => {
-          return { y: item.Atendidas };
-        }),
-        color: "#FF5AC8",
-      },
-    ];
-
-    setCategories(categories);
-    setSeries(series);
-  }, [recomendaciones]); */
 
   return (
     <>
@@ -200,26 +258,6 @@ const Recomendaciones = () => {
         id="recomendaciones"
         marginBottom={4}
       >
-        {/* <Grid item xs={12} md={6} data-aos={isMd ? "fade-right" : "fade-up"}>
-          <Box marginBottom={4}>
-            <Box
-              component={Typography}
-              fontWeight={700}
-              variant={"h4"}
-              gutterBottom
-            >
-              Recomendaciones Atendidas
-            </Box>
-            <Typography variant={"h6"} component={"p"} color={"textSecondary"}>
-              {summary.recomendacion.body1}
-              <br />
-              <br />
-              {summary.recomendacion.body2}
-            </Typography>
-          </Box>
-         
-        </Grid> */}
-
         <Grid
           item
           container
@@ -299,9 +337,19 @@ const Recomendaciones = () => {
                 </Grid>
               </Box>
 
-              <Box marginBottom={4}>
-                <Chart series={series} categories={categories} />
-              </Box>
+              {loadingChartSecondary ? (
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <Box marginBottom={4}>
+                  <Chart series={seriesDep} categories={categoriesDep} />
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>
