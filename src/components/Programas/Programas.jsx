@@ -16,6 +16,7 @@ import { useTheme } from "@mui/material/styles";
 
 import Chart from "../Charts/Chart";
 import BasicTable from "../Table/BasicTable";
+import { summary } from "../../data/simeg";
 
 import SimegService from "../../services/SimegService";
 
@@ -32,8 +33,10 @@ const Programas = () => {
       columnAction: false,
     },
     {
-      label: "PSE",
+      label: "Programas Sociales Estatales",
       id: "F2",
+      width: 250,
+      numeric: true,
       columnAction: false,
     },
   ];
@@ -78,7 +81,7 @@ const Programas = () => {
       .finally(() => setIsLoading(false));
   };
 
-  const handleChangePage = ({page, pageSize}) => {
+  const handleChangePage = ({ page, pageSize }) => {
     const start = page * pageSize;
     const end = start + pageSize;
 
@@ -86,7 +89,7 @@ const Programas = () => {
     setProgramasFiltered(dataFiltered);
     setPage(page);
     setPageSize(pageSize);
-  }
+  };
 
   useEffect(() => {
     const categories = programas.map((item) => item.F1);
@@ -97,8 +100,13 @@ const Programas = () => {
         data: programas.map((item, i) => {
           return { y: item.F2 };
         }),
-        color: "#0066FF"
-        
+        color: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [0, "#0066FF"],
+            [1, "#000F9F"],
+          ],
+        },
       },
     ];
     setCategorie(categories);
@@ -107,6 +115,7 @@ const Programas = () => {
 
   useEffect(() => {
     getStatsByTopic();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -133,38 +142,41 @@ const Programas = () => {
           borderRadius={4}
         >
           <Box component={CardContent}>
-            <Box marginBottom={4} display={"flex"} justifyContent={"flex-end"}>
-              <Tooltip title="Gráfica">
-                <IconButton
-                  className={isChart ? `button_active` : ""}
-                  color="primary"
-                  variant="contained"
-                  component="span"
-                  onClick={() => handleChangeFormat("chart")}
-                >
-                  <BarChart fontSize="small" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Listado">
-                <IconButton
-                  className={active ? `button_active` : ""}
-                  color="primary"
-                  variant="contained"
-                  component="span"
-                  onClick={() => handleChangeFormat("table")}
-                >
-                  <TableRows fontSize="small" />
-                </IconButton>
-              </Tooltip>
+            <Box
+              marginBottom={4}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Typography fontWeight={700}>Programas Evaluados</Typography>
+              <Box>
+                <Tooltip title="Gráfica">
+                  <IconButton
+                    className={isChart ? `button_active` : ""}
+                    color="primary"
+                    variant="contained"
+                    component="span"
+                    onClick={() => handleChangeFormat("chart")}
+                  >
+                    <BarChart fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Listado">
+                  <IconButton
+                    className={active ? `button_active` : ""}
+                    color="primary"
+                    variant="contained"
+                    component="span"
+                    onClick={() => handleChangeFormat("table")}
+                  >
+                    <TableRows fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
             </Box>
 
             <Box marginBottom={4}>
               {isChart ? (
-                <Chart
-                  title={"Programas Evaluados"}
-                  categories={categorie}
-                  series={series}
-                />
+                <Chart categories={categorie} series={series} />
               ) : (
                 <BasicTable
                   hcolumns={colums}
@@ -194,16 +206,10 @@ const Programas = () => {
             Por Ejercicio Fiscal
           </Box>
           <Typography variant={"h6"} component={"p"} color={"textSecondary"}>
-            Lorem ipsum dolor sit amet,
+            {summary.evaluacion.body1}
             <br />
-            consectetur adipiscing elit. Id ultricies sed ultricies fringilla
-            commodo. Lorem ipsum dolor sit amet,
             <br />
-            consectetur adipiscing elit. Id ultricies sed ultricies fringilla
-            commodo. Lorem ipsum dolor sit amet,
-            <br />
-            consectetur adipiscing elit. Id ultricies sed ultricies fringilla
-            commodo.
+            {summary.evaluacion.body2}
           </Typography>
         </Box>
       </Grid>
