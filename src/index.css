@@ -23,6 +23,13 @@ code {
   /* border:5px solid #fff */
 }
 
+.button_active {
+  background-color: #000F9F !important;
+  color: white !important;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+}
+
 /* ::-webkit-scrollbar {
   width: 10px !important;
 } */

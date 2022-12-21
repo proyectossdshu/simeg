@@ -45,6 +45,10 @@ const Recomendaciones = () => {
     ],
   });
 
+  const [filterProgram, setFilterProgram] = useState({
+    filtered: [],
+  });
+
   //Functions API's
   const getEvaluatedProgramsYear = () => {
     SimegService.getEvaluatedProgramsYear({})
@@ -146,19 +150,42 @@ const Recomendaciones = () => {
       .finally(() => setLoadingSecondary(false));
   };
 
+  const getEvaluatedPrograms = (params) => {
+    SimegService.getEvaluatedPrograms(params)
+      .then((res) => {
+        if (res.results) {
+          const { RecomendacionesAtendidas, TotalRecomendaciones } =
+            res.response.series;
+
+          const _series = [
+            {
+              name: "Recomendaciones Atendidas",
+              showInLegend: true,
+              data: TotalRecomendaciones,
+              pointPadding: 0.3,
+              pointPlacement: -0.2,
+              color: blue[700],
+            },
+            {
+              name: "Programas Evaluados",
+              showInLegend: true,
+              data: RecomendacionesAtendidas,
+              pointPadding: 0.4,
+              pointPlacement: -0.2,
+              color: blue[200],
+            },
+          ];
+          setCategoriesDep(res.response.categories);
+          setSeriesDep(_series);
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     const catalogsParams = [
       {
         id: "simeg_ejercicios",
-      },
-      {
-        id: "simeg_dependencias",
-      },
-      {
-        id: "simeg_proyectos",
-      },
-      {
-        id: "simeg_recomendaciones",
       },
     ];
 
@@ -169,10 +196,6 @@ const Recomendaciones = () => {
             switch (item.id) {
               case "simeg_ejercicios":
                 setCatEjercicio(res.response.catalogs[item.id]);
-                break;
-
-              case "simeg_proyectos":
-                setCatProyectos(res.response.catalogs[item.id]);
                 break;
               default:
                 break;
@@ -193,6 +216,19 @@ const Recomendaciones = () => {
     // eslint-disable-next-line
   }, [filterYear]);
 
+  useEffect(() => {
+    if (values.proyecto.length > 0) {
+      let params = {
+        filtered: [
+          { id: "EvaluacionEjercicio", filter: "=", value: values.ejercicio },
+          { id: "Fto10.Fto10ClaveQP", filter: "=", value: values.proyecto },
+        ],
+      };
+      getEvaluatedPrograms(params);
+    }
+    // eslint-disable-next-line
+  }, [values.proyecto]);
+
   //Function and Handlers
   const handleChangeEjercicio = (e) => {
     const año = e.target.value;
@@ -200,6 +236,7 @@ const Recomendaciones = () => {
     setValues({
       ...values,
       ejercicio: año,
+      proyecto: ""
     });
 
     if (año !== "") {
@@ -213,19 +250,29 @@ const Recomendaciones = () => {
         filtered: [filtro],
       }));
     }
+
+    CatalogService.getCatalogs([
+      {
+        id: "simeg_proyectos",
+        filtered: [{ id: "Fto10Anio", filter: "=", value: año }],
+      },
+    ])
+      .then((res) => {
+        if (res.results) {
+          setCatProyectos(res.response.catalogs.simeg_proyectos);
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleChangeProyecto = (e) => {
     const proyecto = e.target.value;
-    //const filtro = { id: "Fto10.Fto10ClaveQP", filter: "=", value: proyecto };
 
     setValues({
       ...values,
+      ejercicio: values.ejercicio,
       proyecto: proyecto,
     });
-    /* setFilter((prevState) => ({
-      filtered: [...prevState.filtered, filtro],
-    })); */
   };
 
   return (
