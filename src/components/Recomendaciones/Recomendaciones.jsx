@@ -159,7 +159,7 @@ const Recomendaciones = () => {
 
           const _series = [
             {
-              name: "Recomendaciones Atendidas",
+              name: "Total de Recomendaciones",
               showInLegend: true,
               data: TotalRecomendaciones,
               pointPadding: 0.3,
@@ -167,7 +167,7 @@ const Recomendaciones = () => {
               color: blue[700],
             },
             {
-              name: "Programas Evaluados",
+              name: "Recomendaciones Atendidas",
               showInLegend: true,
               data: RecomendacionesAtendidas,
               pointPadding: 0.4,
@@ -236,7 +236,7 @@ const Recomendaciones = () => {
     setValues({
       ...values,
       ejercicio: año,
-      proyecto: ""
+      proyecto: "",
     });
 
     if (año !== "") {
