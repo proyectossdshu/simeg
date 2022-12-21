@@ -24,16 +24,12 @@ const Recomendaciones = () => {
   });
 
   //States
-  const [loadingChartPrimary, setLoadingPrimary] = useState(false);
   const [loadingChartSecondary, setLoadingSecondary] = useState(false);
   const [series, setSeries] = useState([]);
   const [categories, setCategories] = useState([]);
   const [seriesDep, setSeriesDep] = useState([]);
   const [categoriesDep, setCategoriesDep] = useState([]);
-  const [recomendaciones, setRecomendaciones] = useState([]);
-  const [catRecomendaciones] = useState([]);
   const [catEjercicio, setCatEjercicio] = useState([]);
-  const [catDependencias, setCatDependencias] = useState([]);
   const [catProyectos, setCatProyectos] = useState([]);
   const [values, setValues] = useState({
     ejercicio: 2016,
@@ -171,10 +167,6 @@ const Recomendaciones = () => {
         if (res.results) {
           catalogsParams.forEach((item) => {
             switch (item.id) {
-              case "simeg_dependencias":
-                setCatDependencias(res.response.catalogs[item.id]);
-                break;
-
               case "simeg_ejercicios":
                 setCatEjercicio(res.response.catalogs[item.id]);
                 break;
@@ -193,10 +185,12 @@ const Recomendaciones = () => {
 
   useEffect(() => {
     getEvaluatedProgramsYear();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     getEvaluatedProgramsDep();
+    // eslint-disable-next-line
   }, [filterYear]);
 
   //Function and Handlers
@@ -223,7 +217,7 @@ const Recomendaciones = () => {
 
   const handleChangeProyecto = (e) => {
     const proyecto = e.target.value;
-    const filtro = { id: "Fto10.Fto10ClaveQP", filter: "=", value: proyecto };
+    //const filtro = { id: "Fto10.Fto10ClaveQP", filter: "=", value: proyecto };
 
     setValues({
       ...values,

@@ -115,6 +115,7 @@ const Programas = () => {
 
   useEffect(() => {
     getStatsByTopic();
+    // eslint-disable-next-line
   }, []);
 
   return (

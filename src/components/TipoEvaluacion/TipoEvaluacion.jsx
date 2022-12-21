@@ -43,7 +43,7 @@ const TipoEvaluacion = () => {
     slidesToShow,
     slidesToScroll: 2,
     arrows: false,
-    //autoplay: true,
+    autoplay: true,
   };
 
   return (
@@ -103,8 +103,15 @@ const TipoEvaluacion = () => {
                     {item.title}
                   </Box>
 
-                  <Box>
-                    <Typography align={"center"} color="textSecondary">
+                  <Box
+                    className="container-text-evaluacion"
+                    sx={{
+                      height: "100px",
+                      overflowY: "auto",
+                      //direction: "rtl",
+                    }}
+                  >
+                    <Typography align={"start"} color="textSecondary">
                       {item.subtitle}
                     </Typography>
                   </Box>
